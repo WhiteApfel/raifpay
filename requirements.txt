@@ -1,0 +1,4 @@
+httpx~=0.25.2
+pydantic~=2.5.2
+uuid~=1.30
+ujson~=5.9.0
