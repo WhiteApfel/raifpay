@@ -15,25 +15,24 @@ def requirements():
 
 
 setup(
-    name="tochka_api",
+    name="raifpay",
     version=environ.get("TAG_VERSION").replace("v", ""),
     packages=[
-        "tochka_api",
-        "tochka_api.exceptions",
-        "tochka_api.models",
-        "tochka_api.models.responses",
+        "raifpay",
+        "raifpay.errors",
+        "raifpay.models",
     ],
-    url="https://github.com/WhiteApfel/tochka_api",
+    url="https://github.com/WhiteApfel/raifpay",
     license="Mozilla Public License 2.0",
     author="WhiteApfel",
     author_email="white@pfel.ru",
-    description="Simple Tochka Bank Open API client",
+    description="RaifPay wrapper",
     install_requires=requirements(),
     project_urls={
-        "Source code": "https://github.com/WhiteApfel/tochka-api",
+        "Source code": "https://github.com/WhiteApfel/raifpay",
         "Write me": "https://t.me/whiteapfel",
     },
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    keywords="tochka openapi api bank",
+    keywords="raiffeisen raiffeisenbank raifpay api bank",
 )
