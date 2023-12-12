@@ -1,7 +1,8 @@
 from contextvars import ContextVar
-from typing import Literal, Any
+from typing import Any, Literal
 
-from httpx import AsyncClient, Response as HttpxResponse
+from httpx import AsyncClient
+from httpx import Response as HttpxResponse
 
 context_api_secret: ContextVar[str | None] = ContextVar(
     "context_api_secret", default=None

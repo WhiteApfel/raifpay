@@ -1,8 +1,7 @@
+import uuid
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Any
-
-import uuid
 
 from raifpay.models.base import RaifPayEmptyResponse
 from raifpay.models.sbp.qr import RaifPayQr

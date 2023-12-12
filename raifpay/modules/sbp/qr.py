@@ -1,10 +1,9 @@
-from datetime import timedelta, datetime
-from decimal import Decimal
-from typing import Literal, Any
-
 import uuid
+from datetime import datetime, timedelta
+from decimal import Decimal
+from typing import Any, Literal
 
-from raifpay.models.base import RaifPayBaseResponse, RaifPayEmptyResponse
+from raifpay.models.base import RaifPayEmptyResponse
 from raifpay.models.sbp.qr import RaifPayQr
 from raifpay.modules.core import filter_chars
 from raifpay.modules.module import RaifPayModule
@@ -22,7 +21,7 @@ class RaifPaySbpQr(RaifPayModule):
         expiration: datetime | timedelta | str | int = 60 * 24 * 3,
         redirect_url: str | None = None,
         # Subscription
-        subscription_id: str | True | None = None,
+        subscription_id: str | bool | None = None,
         subscription_description: str | None = None,
         # Internal info
         order_id: str | None = None,
@@ -35,6 +34,7 @@ class RaifPaySbpQr(RaifPayModule):
             extra = {"apiClient": "RaifPay by WhiteApfel", "apiClientVersion": "python"}
 
         data = {
+            "qrType": f"QR{qr_type}",
             "sbpMerchantId": merchant_id,
         }
 
@@ -47,7 +47,7 @@ class RaifPaySbpQr(RaifPayModule):
         if account is not None:
             data["account"] = account
 
-        if qr_type not in ["Static", "Dynamic"]:
+        if qr_type in ["Static", "Dynamic"]:
             if description is not None:
                 description = filter_chars(description)[:140]
                 data["additionalInfo"] = description
@@ -68,15 +68,18 @@ class RaifPaySbpQr(RaifPayModule):
 
             if qr_type == "Dynamic":
                 if expiration is not None:
+                    if isinstance(expiration, int):
+                        expiration = timedelta(minutes=expiration)
                     if isinstance(expiration, timedelta):
-                        expiration = expiration.seconds // 60
-                    elif isinstance(expiration, datetime):
+                        expiration = datetime.now().astimezone() + expiration
+                    if isinstance(expiration, datetime):
                         expiration = expiration.astimezone().strftime(
                             "%Y-%m-%dT%H:%M:%S%z"
                         )
-                    data["qrExpirationDate"] = expiration
+                    data["qrExpirationDate"] = str(expiration)
 
                 if subscription_id is not None:
+                    data["subscription"] = {}
                     if subscription_id is True:
                         subscription_id = str(uuid.uuid4())
                     data["subscription"]["id"] = subscription_id

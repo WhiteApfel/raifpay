@@ -7,8 +7,8 @@ from httpx import Response
 from raifpay.errors.base import RaifPayError
 from raifpay.models.base import (
     RaifPayBaseResponse,
-    RaifPayRootResponse,
     RaifPayEmptyResponse,
+    RaifPayRootResponse,
 )
 from raifpay.modules.core import RaifPay, context_api_secret
 
@@ -49,7 +49,7 @@ class RaifPayModule:
                             response.status_code
                             == f.__annotations__["return"]._valid_status_code.default
                         ):
-                            if f.__annotations__["return"]._is_empty:
+                            if f.__annotations__["return"]._is_empty.default:
                                 return RaifPayEmptyResponse()
                             return f.__annotations__["return"].model_validate(
                                 ujson.loads(response.text)
@@ -61,7 +61,7 @@ class RaifPayModule:
 
                 setattr(cls, name, decorate(function))
 
-        return super(RaifPayModule, cls).__new__(cls)
+        return super(RaifPayModule, cls).__new__(cls)  # noqa: UP008
 
     def __init__(self, core: RaifPay):
         self.core = core

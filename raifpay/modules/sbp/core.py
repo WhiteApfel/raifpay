@@ -1,4 +1,5 @@
 from raifpay import RaifPay
+from raifpay.models.base import RaifPayEmptyResponse
 from raifpay.models.sbp.banks import RaifPayBanks
 from raifpay.modules.module import RaifPayModule
 from raifpay.modules.sbp.payments import RaifPaySbpPayments
@@ -22,4 +23,20 @@ class RaifPaySbp(RaifPayModule):
         return await self.core.request(
             "GET",
             "/payments/v2/banks",
+        )
+
+    async def test_pay(
+        self, qr_id: str, amount: int | float | None = None
+    ) -> RaifPayEmptyResponse:
+        data = {
+            "qrId": qr_id,
+        }
+
+        if amount is not None:
+            data["amount"] = float(amount)
+
+        return await self.core.request(
+            "POST",
+            "https://pay-test.raif.ru/api/external-mock/v01/rfuture/payment/init",
+            json=data,
         )

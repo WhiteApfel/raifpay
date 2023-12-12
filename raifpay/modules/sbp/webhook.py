@@ -10,6 +10,6 @@ class RaifPaySbpWebhook(RaifPayModule):
 
         return await self.core.request(
             "POST",
-            f"/settings/v1/callback",
+            "/settings/v1/callback",
             json=data,
         )

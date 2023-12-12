@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from raifpay.models.sbp.payments import RaifPayRefund, RaifPayPaymentInfo
+from raifpay.models.sbp.payments import RaifPayPaymentInfo, RaifPayRefund
 from raifpay.modules.module import RaifPayModule
 
 

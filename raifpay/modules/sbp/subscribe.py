@@ -1,8 +1,7 @@
+import uuid
 from decimal import Decimal
 
-import uuid
-
-from raifpay.models.sbp.subscribe import RaifPaySubscription, RaifPayPull
+from raifpay.models.sbp.subscribe import RaifPayPull, RaifPaySubscription
 from raifpay.modules.core import filter_chars
 from raifpay.modules.module import RaifPayModule
 
