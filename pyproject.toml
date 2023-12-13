@@ -7,7 +7,7 @@ name = "raifpay"
 dynamic = ["version"]
 description = "RaifPay wrapper"
 readme = "README.md"
-license = "Mozilla Public License 2.0"
+license = "MPL-2.0"
 authors = [
     { name = "WhiteApfel", email = "white@pfel.ru" },
 ]
@@ -38,7 +38,8 @@ Telegram = "https://t.me/whiteapfel"
 asyncio_mode = "auto"
 
 [tool.hatch.version]
-path = "raifpay/__init__.py"
+source = "code"
+path = "raifpay/__version__.py"
 
 [tool.hatch.build.targets.sdist]
 include = [
